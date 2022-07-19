@@ -15,7 +15,7 @@ def load_images():
     images_array = cv2.imread(image_filepaths)
     
     
-    #return images_array
+    return images_array
     
 
 def grayworld(image):
@@ -47,7 +47,7 @@ def grayworld_2(image):
     source: https://jephraim-manansala.medium.com/image-processing-with-python-color-correction-using-white-balancing-6c6c749886de
     """
 
-    result = ((image * (image.mean() / image.mean(axis=(0, 1)))).clip(0, 255).astype(int))
+    result = ((image * (image.mean() / image.mean(axis=(0, 1)))).clip(0, 255))#.astype(int))
     
     return result
     

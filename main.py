@@ -1,7 +1,7 @@
 from src.preprocessing import *
 from src.data_prep import *
 import numpy as np
-
+import cv2
 
 if __name__ == '__main__':
     
@@ -9,6 +9,6 @@ if __name__ == '__main__':
     #create_img_filepaths_array()
     
     #images = load_images()
-    #res = preprocess_image(img)
+    #res = preprocess_image(images)
     
     create_imagedata_dir()
