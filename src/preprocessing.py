@@ -39,6 +39,17 @@ def grayworld(image):
     
     return result
     
+
+def grayworld_2(image):
+    """
+    Apply  grayworld white balancing with different approach
+    
+    source: https://jephraim-manansala.medium.com/image-processing-with-python-color-correction-using-white-balancing-6c6c749886de
+    """
+
+    result = ((image * (image.mean() / image.mean(axis=(0, 1)))).clip(0, 255).astype(int))
+    
+    return result
     
 
 def imagenet_rgb_subtract(image):    
@@ -82,7 +93,7 @@ def preprocess_image(image):
     """
     Apply all 3 Mahbod preprocessing techniques to an image.
     """
-    result = grayworld(image)
+    result = grayworld_2(image)
     result = imagenet_rgb_subtract(result)
     result = resize_image(result)
     
@@ -135,7 +146,7 @@ def create_imagedata_dir():
     # TRAIN
     # =========================== 
     # get metadata
-    metadata_df = pd.read_csv("./metadata/train.csv")
+    metadata_df = pd.read_csv("./Metadata/train.csv")
     
     # iterate through metadata
     for i in range(metadata_df.shape[0]):
@@ -144,7 +155,7 @@ def create_imagedata_dir():
         image_class = metadata_df.loc[i,:].where(metadata_df.loc[i,:]==1).dropna().index.to_numpy()
         
         isic_id = metadata_df.iloc[i,0]
-        image_filepath = "./images/train/" + isic_id + ".jpg"
+        image_filepath = "./Images/train/" + isic_id + ".jpg"
         
         # read image
         image = cv2.imread(image_filepath)
@@ -165,7 +176,7 @@ def create_imagedata_dir():
     # TEST
     # =========================== 
     # get metadata
-    metadata_df = pd.read_csv("./metadata/test.csv")
+    metadata_df = pd.read_csv("./Metadata/test.csv")
     
     # iterate through metadata
     for i in range(metadata_df.shape[0]):
@@ -174,7 +185,7 @@ def create_imagedata_dir():
         image_class = metadata_df.loc[i,:].where(metadata_df.loc[i,:]==1).dropna().index.to_numpy()
         
         isic_id = metadata_df.iloc[i,0]
-        image_filepath = "./images/test/" + isic_id + ".jpg"
+        image_filepath = "./Images/test/" + isic_id + ".jpg"
         
         # read image
         image = cv2.imread(image_filepath)

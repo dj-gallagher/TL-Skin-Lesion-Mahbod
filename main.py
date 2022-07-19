@@ -12,10 +12,3 @@ if __name__ == '__main__':
     #res = preprocess_image(img)
     
     create_imagedata_dir()
-    
-    
-    
-     
-    
-
-    
