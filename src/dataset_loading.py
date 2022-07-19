@@ -19,8 +19,8 @@ def load_train_data():
     batch_size = 32
     img_height = 128
     img_width = 128
-    
-    train_ds = tf.keras.utils.image_dataset_from_directory(
+        
+    train_ds = tf.keras.preprocessing.image_dataset_from_directory(
         data_dir,
         validation_split=0.1,
         subset="training",
