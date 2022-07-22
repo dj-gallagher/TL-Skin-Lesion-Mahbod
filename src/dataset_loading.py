@@ -10,7 +10,9 @@ import logging
 
 def load_train_data():
     """
+    Load training data into a tf dataset object
     
+    OBSOLETE: Not available in tf 2.2 
     """
     # path to preprocessed training 
     data_dir = pathlib.Path("./Preprocessed_Images/train")
@@ -40,13 +42,17 @@ def load_train_data():
 
 
 def create_dataset_generators():
-    
+    """
+    Create image data generator objects for training, validation and test sets. 
+    Augmentation included on training and validation but not test sets.
+    Returns datagen objects ready for use in a training loop.
+    """
     
     # path to preprocessed image data
     train_data_dir = pathlib.Path("./Preprocessed_Images/train")
     test_data_dir = pathlib.Path("./Preprocessed_Images/test")
     
-    
+    # image data generators
     train_datagen = keras.preprocessing.image.ImageDataGenerator(rotation_range=270,
                                                                  horizontal_flip=True,
                                                                  validation_split=0.1)
@@ -54,9 +60,7 @@ def create_dataset_generators():
     test_datagen = keras.preprocessing.image.ImageDataGenerator()
     
     
-    # path to preprocessed training data
-    train_data_dir = pathlib.Path("./Preprocessed_Images/train")
-    
+    # dataset generators
     train_gen = train_datagen.flow_from_directory(directory=train_data_dir, 
                                       target_size=(128,128),
                                       batch_size=32,
