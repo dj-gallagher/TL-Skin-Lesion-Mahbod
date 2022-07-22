@@ -4,6 +4,7 @@ from src.dataset_loading import *
 
 import numpy as np
 import cv2
+import pathlib
 
 if __name__ == '__main__':
     
@@ -15,4 +16,9 @@ if __name__ == '__main__':
     
     #create_imagedata_dir()
     
-    load_train_data()
+    # TRAINING LOOP
+    # -------------
+    
+    train_gen, val_gen, test_gen = create_dataset_generators()
+    
+    
