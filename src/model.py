@@ -2,7 +2,7 @@ import tensorflow as tf
 from tensorflow import keras
 
 
-def create_baseline():
+def create_basic_ResNet50():
     
     """
     Returns the baseline ResNet50 model
@@ -28,7 +28,7 @@ def create_baseline():
     # Create model using forzen base layers and new FC layers
     model = keras.models.Model(inputs=base_model.input, 
                                outputs=predictions, 
-                               name="BASE_1") 
+                               name="Basic_ResNet50") 
     
 
     # OPTIMIZERS
@@ -57,5 +57,8 @@ def create_baseline():
 
 
 
-    def run_training_loop():
+    def create_baseline_ResNet50():
+        """
+        Returns compiled baseline ResNet50 model ready for training.
+        """
         pass
