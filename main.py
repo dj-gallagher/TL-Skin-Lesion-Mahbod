@@ -32,7 +32,7 @@ if __name__ == '__main__':
     train_gen, val_gen, test_gen = create_dataset_generators()
     
     # Train model, store training history and test set results
-    history, results = run_training_pipeline(run_dir, train_gen, val_gen, test_gen)
+    history, results = run_training_pipeline(run_name, train_gen, val_gen, test_gen)
     # --------------------------
         
     
