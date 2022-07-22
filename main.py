@@ -31,8 +31,7 @@ if __name__ == '__main__':
     run_dir = f"./Output/{run_name}"
     os.mkdir(run_dir)
     
-    logging.basicConfig(filename=run_dir + f'/{run_name}.log',
-                        encoding='utf-8', 
+    logging.basicConfig(filename=run_dir + f'/{run_name}.log', 
                         level=logging.DEBUG,
                         format='%(asctime)s %(message)s')
     
