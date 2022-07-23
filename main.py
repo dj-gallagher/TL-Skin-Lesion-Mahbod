@@ -27,14 +27,14 @@ if __name__ == '__main__':
     # TRAINING LOOP
     # --------------------------
     # Name of run
-    run_name = "RUN_1"
+    run_name = "BASELINE_RUN_1"
     run_dir = f"./Output/{run_name}"
     
     # Load datasets
     train_gen, val_gen, test_gen = create_dataset_generators()
     
     # set number of epochs
-    num_epochs = 10 # 75 epochs to run all augmented data through
+    num_epochs = 75 # 75 epochs to run all augmented data through
     
     # Train model, store training history and test set results
     history, results = run_training_pipeline(run_name, 

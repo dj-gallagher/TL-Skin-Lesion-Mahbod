@@ -28,7 +28,8 @@ def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs):
     logging.info("Creating and compiling keras model")
     
     # Load model
-    model = create_basic_ResNet50()
+    #model = create_basic_ResNet50()
+    model = create_baseline_ResNet50()
     
     logging.info("Training model...")
     
@@ -104,10 +105,11 @@ def save_results(run_dir, history, results):
     
     
     # Test set metrics
-    #metrics_df = pd.DataFrame.from_dict(results, orient="index")
-    #metrics_df.to_csv(run_dir + "/results.csv", columns=["loss", "accuracy", "AUC"])
-    print(results)
-    print(type(results))
+    metrics = ["loss", "accuracy", "AUC"]
+    metrics_dict = dict(zip(metrics, results))
+    metrics_df = pd.DataFrame.from_dict(metrics_dict)
+    metrics_df.to_csv(run_dir + "/results.csv")
+    
     
 '''if __name__ == '__main__':
     model = create_baseline_ResNet50()

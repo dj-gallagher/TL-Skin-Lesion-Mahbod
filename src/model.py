@@ -69,7 +69,7 @@ def create_baseline_ResNet50():
                                                       input_shape=(128,128,3))
     
     #base_model.trainable = False # Blocks 1-17 Frozen as in Mahbod et al.
-    base_model.trainable = True # Blocks 1-17 Frozen as in Mahbod et al.
+    base_model.trainable = False # Blocks 1-17 Frozen as in Mahbod et al.
     
     
     # Define output layers (Mahbod et al. used here)
@@ -86,7 +86,7 @@ def create_baseline_ResNet50():
                                outputs=predictions, 
                                name="Baseline_ResNet50") 
     
-    '''# UNFREEZE 17TH BLOCK
+    # UNFREEZE 17TH BLOCK
     # -------------------------------------
     # Create dictionary of layer name and whether the layer is trainable 
     trainable_dict = dict([ (layer.name, layer.trainable) for layer in model.layers ])
@@ -103,7 +103,7 @@ def create_baseline_ResNet50():
     
     for layer_name, trainable_bool in trainable_dict.items():
         layer = model.get_layer(name=layer_name)
-        layer.trainable = trainable_bool'''
+        layer.trainable = trainable_bool
     
 
     # OPTIMIZERS
@@ -136,8 +136,8 @@ def create_baseline_ResNet50():
     
     # Standard Optimizer
     #optimizer = keras.optimizers.Adam(learning_rate=lr)
-    #optimizer = keras.optimizers.SGD(learning_rate=0.01, momentum=0.9)
-    optimizer = keras.optimizers.SGD()
+    optimizer = keras.optimizers.SGD(learning_rate=0.01, momentum=0.9)
+    #optimizer = keras.optimizers.SGD()
     #optimizer = keras.optimizers.RMSprop(learning_rate=0.0001)
     
     # ---------------------------
