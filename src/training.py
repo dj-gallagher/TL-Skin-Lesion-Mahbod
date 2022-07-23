@@ -1,4 +1,4 @@
-from src.model import create_basic_ResNet50
+from src.model import create_baseline_ResNet50, create_basic_ResNet50
 
 import logging
 import os
@@ -80,8 +80,8 @@ def save_results(run_dir, history, results):
     """
     
     # Training and validation metric plots
-    acc = history.history['acc']
-    val_acc = history.history['val_acc']
+    acc = history.history['accuracy']
+    val_acc = history.history['val_accuracy']
     loss = history.history['loss']
     val_loss = history.history['val_loss']
     
@@ -111,3 +111,8 @@ def save_results(run_dir, history, results):
     # Test set metrics
     metrics_df = pd.DataFrame(results, index=[0])
     metrics_df.to_csv(run_dir + "/results.csv")
+    
+    
+'''if __name__ == '__main__':
+    model = create_baseline_ResNet50()
+    print(model.summary())'''
