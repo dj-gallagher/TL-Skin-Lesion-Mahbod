@@ -63,6 +63,7 @@ def create_dataset_generators():
     # dataset generators
     train_gen = train_datagen.flow_from_directory(directory=train_data_dir, 
                                       target_size=(128,128),
+                                      class_mode="categorical",
                                       batch_size=32,
                                       shuffle=True,
                                       seed=123,
@@ -70,6 +71,7 @@ def create_dataset_generators():
     
     val_gen = train_datagen.flow_from_directory(directory=train_data_dir, 
                                       target_size=(128,128),
+                                      class_mode="categorical",
                                       batch_size=32,
                                       shuffle=True,
                                       seed=123,
@@ -77,9 +79,9 @@ def create_dataset_generators():
     
     test_gen = test_datagen.flow_from_directory(directory=test_data_dir,
                                                 target_size=(128,128),
+                                                class_mode="categorical",
                                                 batch_size=1,
                                                 shuffle=False,
-                                                seed=123,
-                                                subset="training")
+                                                seed=123)
     
     return train_gen, val_gen, test_gen
