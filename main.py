@@ -4,8 +4,11 @@ from src.training import *
 from src.dataset_loading import *
 
 import matplotlib.pyplot as plt
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import matplotlib
 import logging
+
+
+matplotlib.use('Agg') # https://stackoverflow.com/questions/2801882/generating-a-png-with-matplotlib-when-display-is-undefined/3054314#3054314
 
 if __name__ == '__main__':
     
@@ -44,7 +47,6 @@ if __name__ == '__main__':
     # --------------------------
     save_results(run_dir, history, results)
     
-    # confusion matrix 
-    y_true = test_gen.labels
+    
     
     # --------------------------
