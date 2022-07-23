@@ -104,9 +104,10 @@ def save_results(run_dir, history, results):
     
     
     # Test set metrics
-    metrics_df = pd.DataFrame.from_dict(results, orient="index")
-    metrics_df.to_csv(run_dir + "/results.csv", columns=["loss", "accuracy", "AUC"])
-    
+    #metrics_df = pd.DataFrame.from_dict(results, orient="index")
+    #metrics_df.to_csv(run_dir + "/results.csv", columns=["loss", "accuracy", "AUC"])
+    print(results)
+    print(type(results))
     
 '''if __name__ == '__main__':
     model = create_baseline_ResNet50()
