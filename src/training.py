@@ -66,7 +66,7 @@ def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs):
     plt.grid(False)
     matrix = confusion_matrix(y_true, y_pred)
     matrix_plot = ConfusionMatrixDisplay(matrix,
-                            display_labels=["mel", "seb", "nev"]).plot()
+                            display_labels=["mel", "nev", "seb"]).plot() # note: name ordering is the same order as directory tree in test images dir
     plt.savefig(f"./Output/{run_name}/conf_matrix.png")
     
     
@@ -87,29 +87,31 @@ def save_results(run_dir, history, results):
     
     epochs = range(1, len(acc) + 1)
 
-    plt.plot(epochs, acc, label='Training acc')
-    plt.plot(epochs, val_acc, label='Validation acc')
-    plt.title('Training and validation accuracy')
-    plt.xlabel("Epoch")
-    plt.ylabel("Accuracy")
-    plt.legend()
-
-    plt.savefig(run_dir + '/accuracy.png')
+    fig1, ax1 = plt.subplots()
     
-    plt.figure()
+    ax1.plot(epochs, acc, label='Training acc')
+    ax1.plot(epochs, val_acc, label='Validation acc')
+    ax1.set_title('Training and validation accuracy')
+    ax1.set_xlabel("Epoch")
+    ax1.set_ylabel("Accuracy")
+    ax1.legend()
 
-    plt.plot(epochs, loss, label='Training loss')
-    plt.plot(epochs, val_loss, label='Validation loss')
-    plt.title('Training and validation loss')
-    plt.xlabel("Epoch")
-    plt.ylabel("Loss")
-    plt.legend()
+    fig1.savefig(run_dir + '/accuracy.png')
+    
+    fig2, ax2 = plt.subplots()
 
-    plt.savefig(run_dir + '/loss.png')
+    ax2.plot(epochs, loss, label='Training loss')
+    ax2.plot(epochs, val_loss, label='Validation loss')
+    ax2.set_title('Training and validation loss')
+    ax2.set_xlabel("Epoch")
+    ax2.set_ylabel("Loss")
+    ax2.legend()
+
+    fig2.savefig(run_dir + '/loss.png')
     
     
     # Test set metrics
-    metrics_df = pd.DataFrame(results, index=[0])
+    metrics_df = pd.DataFrame.from_dict(results)
     metrics_df.to_csv(run_dir + "/results.csv")
     
     
