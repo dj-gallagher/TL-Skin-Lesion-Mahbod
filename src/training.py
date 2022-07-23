@@ -55,13 +55,6 @@ def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs):
     y_pred = model.predict(test_gen) # get predicted labels
     y_pred = y_pred.argmax(axis=1) # convert to ints
     
-    print("TEST GEN LABELS:")
-    print(y_true)
-    print("\n")
-    print("PRED LABELS:")
-    print(y_pred)
-    
-    
     plt.figure()
     plt.grid(False)
     matrix = confusion_matrix(y_true, y_pred)
@@ -111,8 +104,8 @@ def save_results(run_dir, history, results):
     
     
     # Test set metrics
-    metrics_df = pd.DataFrame.from_dict(results)
-    metrics_df.to_csv(run_dir + "/results.csv")
+    metrics_df = pd.DataFrame.from_dict(results, orient="index")
+    metrics_df.to_csv(run_dir + "/results.csv", columns=["loss", "accuracy", "AUC"])
     
     
 '''if __name__ == '__main__':
