@@ -68,7 +68,6 @@ def create_baseline_ResNet50():
                                                       weights="imagenet",
                                                       input_shape=(128,128,3))
     
-    #base_model.trainable = False # Blocks 1-17 Frozen as in Mahbod et al.
     base_model.trainable = False # Blocks 1-17 Frozen as in Mahbod et al.
     
     
@@ -136,8 +135,7 @@ def create_baseline_ResNet50():
     
     # Standard Optimizer
     #optimizer = keras.optimizers.Adam(learning_rate=lr)
-    optimizer = keras.optimizers.SGD(learning_rate=0.01, momentum=0.9)
-    #optimizer = keras.optimizers.SGD()
+    optimizer = keras.optimizers.SGD(learning_rate=0.001, momentum=0.9)
     #optimizer = keras.optimizers.RMSprop(learning_rate=0.0001)
     
     # ---------------------------

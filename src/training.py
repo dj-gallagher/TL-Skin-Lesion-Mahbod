@@ -107,7 +107,7 @@ def save_results(run_dir, history, results):
     # Test set metrics
     metrics = ["loss", "accuracy", "AUC"]
     metrics_dict = dict(zip(metrics, results))
-    metrics_df = pd.DataFrame.from_dict(metrics_dict)
+    metrics_df = pd.DataFrame.from_dict(metrics_dict, index=[0])
     metrics_df.to_csv(run_dir + "/results.csv")
     
     
