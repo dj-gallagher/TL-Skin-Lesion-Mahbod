@@ -27,7 +27,7 @@ if __name__ == '__main__':
     # TRAINING LOOP
     # --------------------------
     # Name of run
-    run_name = "BASELINE_RUN_1"
+    run_name = "BASELINE_RUN_2"
     run_dir = f"./Output/{run_name}"
     
     # Load datasets
