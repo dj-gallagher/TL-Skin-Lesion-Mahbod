@@ -7,7 +7,7 @@ import pandas as pd
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 
-def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs):
+def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, random_seed):
     """
     
     """
@@ -29,7 +29,7 @@ def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs):
     
     # Load model
     #model = create_basic_ResNet50()
-    model = create_baseline_ResNet50()
+    model = create_baseline_ResNet50(random_seed)
     
     logging.info("Training model...")
     
@@ -110,7 +110,3 @@ def save_results(run_dir, history, results):
     metrics_df = pd.DataFrame(metrics_dict, index=[0])
     metrics_df.to_csv(run_dir + "/results.csv")
     
-    
-'''if __name__ == '__main__':
-    model = create_baseline_ResNet50()
-    print(model.summary())'''
