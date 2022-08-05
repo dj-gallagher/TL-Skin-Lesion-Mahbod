@@ -1,5 +1,93 @@
 from tensorflow import keras
+import tensorflow as tf
 #from src.new_optimizer import *
+
+#### ======= ####
+
+def get_layers(layer): 
+    try: 
+        return layer.layers
+    except AttributeError: 
+        return []
+
+def get_mult(layer):
+    #if not mult then assume 1
+    try:
+        return layer.lr_mult
+    except AttributeError:
+        return 1.
+    
+def assign_mult(layer, lr_mult):
+    #if has mult, don't override
+    try:
+        layer.lr_mult 
+    except AttributeError: 
+        layer.lr_mult = lr_mult 
+    
+def get_lowest_layers(model):
+    layers = get_layers(model)
+    
+    mult = get_mult(model)
+    
+    if len(layers) > 0: 
+        for layer in layers: 
+            #propage mult to lower layers
+            assign_mult(layer, mult)
+            for sublayer in get_lowest_layers(layer):
+                yield sublayer
+    else:
+        yield model
+    
+def apply_mult_to_var(layer): 
+    mult = get_mult(layer)
+    for var in layer.trainable_variables:
+        var.lr_mult = tf.convert_to_tensor(mult, tf.float32)
+
+    return layer
+
+def inject(model): 
+    
+    for layer in get_lowest_layers(model): 
+        apply_mult_to_var(layer) 
+    
+    #get opt, move the original apply fn to a safe place, assign new apply fn 
+    opt = model.optimizer
+    opt._apply_gradients = opt.apply_gradients
+    opt.apply_gradients = apply_gradients.__get__(opt)
+    opt.testing_flag = True 
+    
+    return model
+    
+def apply_gradients(self, grads_and_vars, *args, **kwargs): 
+    
+    if self.testing_flag: 
+        print('Training with layerwise learning rates')
+        self.testing_flag = False
+        
+    grads = [] 
+    var_list = [] 
+    
+    #scale each grad based on var's lr_mult
+    for grad, var in grads_and_vars:
+        grad = tf.math.scalar_mul(var.lr_mult, grad)
+        grads.append(grad)
+        var_list.append(var)
+    
+    grads_and_vars = list(zip(grads, var_list))
+
+#### ======= ####
+
+
+def apply_desc_lr(model):
+    
+    # Set multipliers for FC layers
+    for layer in model.layers[-4:]:
+        layer.lr_mult = 10
+
+    inject(model)
+    
+    return model
+    
 
 def create_basic_ResNet50():
     

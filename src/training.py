@@ -1,4 +1,4 @@
-from src.model import create_baseline_ResNet50, create_basic_ResNet50
+from src.model import *
 
 import logging
 import os
@@ -30,6 +30,14 @@ def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, ra
     # Load model
     #model = create_basic_ResNet50()
     model = create_baseline_ResNet50(random_seed)
+    
+    # Set layer specific LR
+    # Set LR multipliers for FC layers
+    for layer in model.layers[-2:]:
+        layer.lr_mult = 10
+
+    inject(model)
+    
     
     logging.info("Training model...")
     
