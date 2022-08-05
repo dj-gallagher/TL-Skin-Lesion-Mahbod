@@ -25,10 +25,10 @@ if __name__ == '__main__':
     # --------------------------
     
     
-    '''# TRAINING LOOP
+    # TRAINING LOOP
     # --------------------------
     # Name of run
-    run_name = "BASELINE_MULTI_LR_RUN_1"
+    run_name = "COSINE_LR_RUN_1"
     run_dir = f"./Output/{run_name}"
     
     # Load datasets
@@ -50,11 +50,11 @@ if __name__ == '__main__':
     
     # RESULTS SAVING
     # --------------------------
-    save_results(run_dir, history, results)'''
+    save_results(run_dir, history, results)
     
     
     
-    seed_list = [8, 653, 454, 746, 505, 631]
+    '''seed_list = [8, 653, 454, 746, 505, 631]
     
     # Load datasets
     train_gen, val_gen, test_gen = create_dataset_generators()
@@ -80,7 +80,7 @@ if __name__ == '__main__':
             
         # RESULTS SAVING
         # --------------------------
-        save_results(run_dir, history, results)
+        save_results(run_dir, history, results)'''
     
         
     # --------------------------

@@ -192,6 +192,21 @@ def create_baseline_ResNet50(random_seed):
         layer.trainable = trainable_bool
     
 
+    # COSINE LR DECAY
+    # ===========================
+    # decay steps = (batches per epoch) * (number of epochs)
+    steps = 66 * (75)
+    
+    # Cosine learning rate decay 
+    lr_decay_function = keras.experimental.CosineDecay(initial_learning_rate=0.001,
+                                                        decay_steps=steps,
+                                                        alpha=0.001*0.01) # minimum learning rate
+    
+    optimizer = keras.optimizers.SGD(learning_rate=lr_decay_function, momentum=0.9)
+
+    
+    # ===========================
+    
     # OPTIMIZERS
     # -------------------------------------
     '''learning_rate_multipliers = {}
@@ -208,7 +223,7 @@ def create_baseline_ResNet50(random_seed):
     
     # Standard Optimizer
     #optimizer = keras.optimizers.Adam(learning_rate=lr)
-    optimizer = keras.optimizers.SGD(learning_rate=0.001, momentum=0.9)
+    #optimizer = keras.optimizers.SGD(learning_rate=0.001, momentum=0.9)
     #optimizer = keras.optimizers.RMSprop(learning_rate=0.0001)
     
     # ---------------------------
