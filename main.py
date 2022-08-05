@@ -28,7 +28,7 @@ if __name__ == '__main__':
     # TRAINING LOOP
     # --------------------------
     # Name of run
-    run_name = "COSINE_LR_RUN_1"
+    run_name = "LABEL_SMOOTH_RUN_1"
     run_dir = f"./Output/{run_name}"
     
     # Load datasets

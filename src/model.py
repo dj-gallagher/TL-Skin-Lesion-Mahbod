@@ -233,7 +233,7 @@ def create_baseline_ResNet50(random_seed):
     # -------------------------------------
     # Apply label smoothing factor, default is 0 (no smoothing)
     #loss_func = keras.losses.CategoricalCrossentropy(label_smoothing=label_smooth_factor)
-    loss_func = keras.losses.CategoricalCrossentropy()
+    loss_func = keras.losses.CategoricalCrossentropy(label_smoothing=0.1)
     
     metrics_list = ['accuracy',
                     keras.metrics.AUC()] 
