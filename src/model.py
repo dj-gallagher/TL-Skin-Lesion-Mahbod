@@ -161,9 +161,16 @@ def create_baseline_ResNet50(random_seed):
     # Define output layers (Mahbod et al. used here)
     x = base_model.output
     x = keras.layers.GlobalAveragePooling2D()(x)
+
+    x = keras.layers.Dropout(rate=0.05, seed=random_seed)(x)
+
     x = keras.layers.Dense(units=64, 
                            activation="relu", 
                            kernel_initializer=keras.initializers.RandomNormal(mean=0, stddev=1, seed=random_seed))(x)
+    
+    x = keras.layers.Dropout(rate=0.05, seed=random_seed)(x)
+
+    
     predictions = keras.layers.Dense(units=3, activation="softmax",
                                      kernel_initializer=keras.initializers.RandomNormal(mean=0, stddev=1, seed=random_seed))(x)
 
