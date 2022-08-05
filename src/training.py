@@ -33,6 +33,9 @@ def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, ra
     
     # Set layer specific LR
     # Set LR multipliers for FC layers
+    for layer in model.layers[:-2]:
+        layer.lr_mult = 1
+    
     for layer in model.layers[-2:]:
         layer.lr_mult = 10
 
