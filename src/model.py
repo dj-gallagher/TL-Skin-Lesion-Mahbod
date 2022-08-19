@@ -1,6 +1,6 @@
 from tensorflow import keras
 import tensorflow as tf
-#from src.new_optimizer import *
+import tensorflow_addons as tfa
 
 #### ======= ####
 
@@ -150,7 +150,7 @@ def create_baseline_ResNet50(random_seed):
     """
         
     # DEFINING MODEL LAYERS
-    # ---------------------------
+    # -------------------------------------
     base_model = keras.applications.resnet50.ResNet50(include_top=False,
                                                       weights="imagenet",
                                                       input_shape=(128,128,3))
@@ -162,19 +162,19 @@ def create_baseline_ResNet50(random_seed):
     x = base_model.output
     x = keras.layers.GlobalAveragePooling2D()(x)
 
-    x = keras.layers.Dropout(rate=0.05, seed=random_seed)(x)
+    #x = keras.layers.Dropout(rate=0.05, seed=random_seed)(x)
 
     x = keras.layers.Dense(units=64, 
                            activation="relu", 
                            kernel_initializer=keras.initializers.RandomNormal(mean=0, stddev=1, seed=random_seed))(x)
     
-    x = keras.layers.Dropout(rate=0.05, seed=random_seed)(x)
+    #x = keras.layers.Dropout(rate=0.05, seed=random_seed)(x)
 
     
     predictions = keras.layers.Dense(units=3, activation="softmax",
                                      kernel_initializer=keras.initializers.RandomNormal(mean=0, stddev=1, seed=random_seed))(x)
 
-    # Create model using forzen base layers and new FC layers
+    # Create model using frozen base layers and new FC layers
     model = keras.models.Model(inputs=base_model.input, 
                                outputs=predictions, 
                                name="Baseline_ResNet50") 
@@ -200,7 +200,8 @@ def create_baseline_ResNet50(random_seed):
     
 
     # COSINE LR DECAY
-    # ===========================
+    # -------------------------------------
+    '''
     # decay steps = (batches per epoch) * (number of epochs)
     steps = 66 * (75)
     
@@ -210,10 +211,8 @@ def create_baseline_ResNet50(random_seed):
                                                         alpha=0.001*0.01) # minimum learning rate
     
     optimizer = keras.optimizers.SGD(learning_rate=lr_decay_function, momentum=0.9)
-
-    
-    # ===========================
-    
+    '''
+        
     # OPTIMIZERS
     # -------------------------------------
     '''learning_rate_multipliers = {}
@@ -226,9 +225,32 @@ def create_baseline_ResNet50(random_seed):
         print("Layer 10X: ", layer.name)
         
     adam_with_lr_multipliers = Adam_lr_mult(lr=0.0001, multipliers=learning_rate_multipliers)'''
+
+    
+    # OPTIMIZER
+    # -------------------------------------
+    # Different LR for pretrained and FC layers
+    pretrained_lr = 0.0001 
+    new_lr = 10 * pretrained_lr 
+
+    # ----- MULTIOPTIMIZER ------
+    optimizers = [keras.optimizers.Adam(learning_rate=pretrained_lr),
+                  keras.optimizers.Adam(learning_rate=new_lr)]
+
+    # Layer objects for pre-trained and FC layers
+    block_17_layers = [ model.get_layer(name=name) for name in block_17_names ]
+    new_fc_layers = model.layers[-3:]
+
+    # (Optimizer, layer) pairs 
+    block_17_optimizers_and_layers =  [(optimizers[0], block_17_layers)]  #[  (optimizers[0],layer) for layer in block_17_layers ]
+    new_fc_optimizers_and_layers = [(optimizers[1], new_fc_layers)]  #[  (optimizers[1],layer) for layer in new_fc_layers ]
+    optimizers_and_layers = block_17_optimizers_and_layers + new_fc_optimizers_and_layers
+
+    # Optimizer with different learning rates across layers
+    optimizer = tfa.optimizers.MultiOptimizer(optimizers_and_layers)
     
     
-    # Standard Optimizer
+    # ----- STANDARD OPTIMIZERS ------
     #optimizer = keras.optimizers.Adam(learning_rate=lr)
     #optimizer = keras.optimizers.SGD(learning_rate=0.001, momentum=0.9)
     #optimizer = keras.optimizers.RMSprop(learning_rate=0.0001)
@@ -240,7 +262,7 @@ def create_baseline_ResNet50(random_seed):
     # -------------------------------------
     # Apply label smoothing factor, default is 0 (no smoothing)
     #loss_func = keras.losses.CategoricalCrossentropy(label_smoothing=label_smooth_factor)
-    loss_func = keras.losses.CategoricalCrossentropy(label_smoothing=0.1)
+    loss_func = keras.losses.CategoricalCrossentropy(label_smoothing=0)
     
     metrics_list = ['accuracy',
                     keras.metrics.AUC()] 

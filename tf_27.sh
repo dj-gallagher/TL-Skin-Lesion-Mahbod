@@ -14,7 +14,6 @@
 
 module load shared
 module load miniconda3/3.9.1
-module load tensorflow2-py37-cuda10.1-gcc/2.2.0 
 
 ### Your code here ###
 free -h
@@ -23,8 +22,8 @@ free -h
 source /cm/shared/apps/miniconda/miniconda3/etc/profile.d/conda.sh
 
 # Activate the specific environment you want to use
-conda activate my_python3_env
+conda activate tf_27_env
 
 # The code you wish to run. In this case, 
 # use python3 to run the script called "Tensorflow2.py"
-python3 main.py
+python3 main_tf27.py
