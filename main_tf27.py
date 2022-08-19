@@ -17,14 +17,14 @@ if __name__ == '__main__':
     # TRAINING LOOP
     # --------------------------
     # Name of run
-    run_name = "tf_27_test1"
+    run_name = "tf_27_test2"
     run_dir = f"./Output/{run_name}"
     
     # Load datasets
     train_gen, val_gen, test_gen = create_dataset_generators()
     
     # set number of epochs
-    num_epochs = 25 # 75 epochs to run all augmented data through
+    num_epochs = 75 # 75 epochs to run all augmented data through
     
     # set random seed
     seed = 4409
