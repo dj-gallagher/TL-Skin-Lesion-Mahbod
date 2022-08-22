@@ -46,7 +46,8 @@ def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, ra
     logging.info("Testing trained model...")
     
     # Evaluate 
-    results = model.evaluate(x=test_gen)
+    results = model.evaluate(x=test_gen,
+                             steps=600*8)
     
     logging.info("Testing finished.")
     

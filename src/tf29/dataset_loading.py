@@ -36,7 +36,7 @@ def load_train_data():
 
 
 
-def create_dataset_generators():
+def create_dataset_generators(random_seed):
     """
     Create image data generator objects for training, validation and test sets. 
     Augmentation included on training and validation but not test sets.
@@ -52,7 +52,8 @@ def create_dataset_generators():
                                                                  horizontal_flip=True,
                                                                  validation_split=0.1)
     
-    test_datagen = keras.preprocessing.image.ImageDataGenerator()
+    test_datagen = keras.preprocessing.image.ImageDataGenerator(rotation_range=270,
+                                                                 horizontal_flip=True)
     
     
     # dataset generators
@@ -61,7 +62,7 @@ def create_dataset_generators():
                                       class_mode="categorical",
                                       batch_size=32,
                                       shuffle=True,
-                                      seed=123,
+                                      seed=random_seed,
                                       subset="training")
     
     val_gen = train_datagen.flow_from_directory(directory=train_data_dir, 
@@ -69,7 +70,7 @@ def create_dataset_generators():
                                       class_mode="categorical",
                                       batch_size=32,
                                       shuffle=True,
-                                      seed=123,
+                                      seed=random_seed,
                                       subset="validation")
     
     test_gen = test_datagen.flow_from_directory(directory=test_data_dir,
@@ -77,6 +78,6 @@ def create_dataset_generators():
                                                 class_mode="categorical",
                                                 batch_size=1,
                                                 shuffle=False,
-                                                seed=123)
+                                                seed=random_seed)
     
     return train_gen, val_gen, test_gen
