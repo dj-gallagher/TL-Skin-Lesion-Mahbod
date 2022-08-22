@@ -26,4 +26,4 @@ conda activate tf_27_env
 
 # The code you wish to run. In this case, 
 # use python3 to run the script called "Tensorflow2.py"
-python3 main_tf27.py
+python3 main_tf29.py

@@ -1,34 +1,21 @@
-from src.tf22.preprocessing import *
-from src.tf22.metadata_prep import *
-from src.tf22.training import *
-from src.tf22.dataset_loading import *
+from src.tf29.preprocessing import *
+from src.tf29.metadata_prep import *
+from src.tf29.training import *
+from src.tf29.dataset_loading import *
 
 import matplotlib
 
-
-# execute below to fix plot saving on the GPU
 matplotlib.use('Agg') # https://stackoverflow.com/questions/2801882/generating-a-png-with-matplotlib-when-display-is-undefined/3054314#3054314
 
 if __name__ == '__main__':
-    
-    # DEV
-    # --------------------------
-    #change_metadata()
-    #create_img_filepaths_array()
-    
-    #images = load_images()
-    #res = preprocess_image(images)
-    
-    #create_imagedata_dir()
-    # --------------------------
     
     
     # TRAINING LOOP
     # --------------------------
     # Name of run
-    run_name = "DROPOUT_0.05_RUN_1"
+    run_name = "tf_29_SGDM_test1"
     run_dir = f"./Output/{run_name}"
-    run_description = ""
+    run_description = "Test run for new conda env with TF 2.7 and SGDM optimizer"
     
     # Load datasets
     train_gen, val_gen, test_gen = create_dataset_generators()
@@ -46,6 +33,7 @@ if __name__ == '__main__':
                                              seed)
     # --------------------------
         
+        
     
     # RESULTS SAVING
     # --------------------------
@@ -53,15 +41,9 @@ if __name__ == '__main__':
     
     
         
-    # --------------------------
-
-
 def main():
-    """
-    Steps:
-        1. 
-
-    """
+    
+    # 
     
     
     pass

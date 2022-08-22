@@ -1,12 +1,7 @@
-import tensorflow as tf
-import numpy as np
-import PIL
-import os
-
 from tensorflow import keras
 import pathlib
-
 import logging
+
 
 def load_train_data():
     """
@@ -23,7 +18,7 @@ def load_train_data():
     img_width = 128
     
     
-    train_ds = tf.keras.preprocessing.image_dataset_from_directory(
+    train_ds = keras.preprocessing.image_dataset_from_directory(
         data_dir,
         validation_split=0.1,
         subset="training",
