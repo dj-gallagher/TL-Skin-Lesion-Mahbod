@@ -126,8 +126,8 @@ def create_baseline_ResNet50(random_seed):
     #optimizers = [keras.optimizers.Adam(learning_rate=pretrained_lr),
     #              keras.optimizers.Adam(learning_rate=new_lr)]
     
-    optimizers = [keras.optimizers.SGDM(learning_rate=pretrained_lr, momentum=0.9),
-                  keras.optimizers.SGDM(learning_rate=new_lr, momentum=0.9)]
+    optimizers = [keras.optimizers.SGD(learning_rate=pretrained_lr, momentum=0.9),
+                  keras.optimizers.SGD(learning_rate=new_lr, momentum=0.9)]
 
     # Layer objects for pre-trained and FC layers
     block_17_layers = [ model.get_layer(name=name) for name in block_17_names ]
