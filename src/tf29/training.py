@@ -56,7 +56,8 @@ def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, ra
     # ---------------------
     y_true = test_gen.labels
     
-    y_pred = model.predict(test_gen) # get predicted labels
+    y_pred = model.predict(test_gen,
+                           steps=600*8) # get predicted labels
     y_pred = y_pred.argmax(axis=1) # convert to ints
     
     plt.figure()
