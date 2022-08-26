@@ -100,8 +100,8 @@ def save_results(run_dir, history, results):
     
     fig2, ax2 = plt.subplots()
 
-    ax2.plot(epochs, loss, label='Training loss')
-    ax2.plot(epochs, val_loss, label='Validation loss')
+    ax2.plot(epochs[4:], loss, label='Training loss')
+    ax2.plot(epochs[4:], val_loss, label='Validation loss')
     ax2.set_title('Training and validation loss')
     ax2.set_xlabel("Epoch")
     ax2.set_ylabel("Loss")
@@ -111,8 +111,8 @@ def save_results(run_dir, history, results):
     
     fig3, ax3 = plt.subplots()
 
-    ax3.plot(epochs[4:], auc, label='Training loss')
-    ax3.plot(epochs[4:], val_auc, label='Validation loss')
+    ax3.plot(epochs, auc, label='Training loss')
+    ax3.plot(epochs, val_auc, label='Validation loss')
     ax3.set_title('Training and validation AUC')
     ax3.set_xlabel("Epoch")
     ax3.set_ylabel("AUC")
