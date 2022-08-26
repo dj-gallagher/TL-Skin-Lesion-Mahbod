@@ -111,8 +111,8 @@ def save_results(run_dir, history, results):
     
     fig3, ax3 = plt.subplots()
 
-    ax3.plot(epochs, auc, label='Training loss')
-    ax3.plot(epochs, val_auc, label='Validation loss')
+    ax3.plot(epochs[4:], auc, label='Training loss')
+    ax3.plot(epochs[4:], val_auc, label='Validation loss')
     ax3.set_title('Training and validation AUC')
     ax3.set_xlabel("Epoch")
     ax3.set_ylabel("AUC")
