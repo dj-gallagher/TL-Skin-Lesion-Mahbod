@@ -47,7 +47,7 @@ def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, ra
     
     # Evaluate 
     results = model.evaluate(x=test_gen,
-                             steps=600*8)
+                             steps=8)
     
     logging.info("Testing finished.")
     
@@ -57,7 +57,7 @@ def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, ra
     y_true = test_gen.labels
     
     y_pred = model.predict(test_gen,
-                           steps=600*8) # get predicted labels
+                           steps=8) # get predicted labels
     y_pred = y_pred.argmax(axis=1) # convert to ints
     
     plt.figure()
@@ -80,8 +80,10 @@ def save_results(run_dir, history, results):
     # Training and validation metric plots
     acc = history.history['accuracy']
     val_acc = history.history['val_accuracy']
-    loss = history.history['loss']
-    val_loss = history.history['val_loss']
+    loss = history.history['loss'][4:]
+    val_loss = history.history['val_loss'][4:]
+    auc = history.history['auc']
+    val_auc = history.history['val_auc']
     
     epochs = range(1, len(acc) + 1)
 
@@ -106,6 +108,17 @@ def save_results(run_dir, history, results):
     ax2.legend()
 
     fig2.savefig(run_dir + '/loss.png')
+    
+    fig3, ax3 = plt.subplots()
+
+    ax3.plot(epochs, auc, label='Training loss')
+    ax3.plot(epochs, val_auc, label='Validation loss')
+    ax3.set_title('Training and validation AUC')
+    ax3.set_xlabel("Epoch")
+    ax3.set_ylabel("AUC")
+    ax3.legend()
+
+    fig3.savefig(run_dir + '/auc.png')
     
     
     # Test set metrics

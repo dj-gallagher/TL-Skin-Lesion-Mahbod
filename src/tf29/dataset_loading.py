@@ -76,7 +76,7 @@ def create_dataset_generators(random_seed):
     test_gen = test_datagen.flow_from_directory(directory=test_data_dir,
                                                 target_size=(128,128),
                                                 class_mode="categorical",
-                                                batch_size=1,
+                                                batch_size=600,
                                                 shuffle=False,
                                                 seed=random_seed)
     
