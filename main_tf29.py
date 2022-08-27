@@ -102,6 +102,55 @@ def cosine_LR_decay():
         save_results(run_dir, history, results)
     
     
+def label_smooth():
+    """
+    Multiple runs where label smoothing rate is varied. Random seed of 6664 is used.
+    15 training epochs. LR min factor of alpha = 0.25
+    """
+    
+    run_num = 0
+    
+    for rate in [0.5, 0.3, 0.1, 0.05]:
+        
+        # to name output files as fullstop in min value will cause error
+        run_num += 1
+                
+        # clear session at run start to reset Keras name generation sequence
+        tf.keras.backend.clear_session()
+        
+        # set random seed
+        seed = 6664
+        
+        
+        # TRAINING LOOP
+        # --------------------------
+        # Name of run
+        run_name = f"labelSmooth_{run_num}"
+        run_dir = f"./Output/{run_name}"
+        run_description = f"Baseline with SGDM, cosine LR decay and label smoothing. Testing smooth rate. Rate for run = {rate}"
+        
+        # Load datasets
+        #train_gen, val_gen, test_gen = create_dataset_generators(seed)
+        train_gen, val_gen, test_gen = create_dataset_generators2(seed)
+        
+        # set number of epochs
+        num_epochs = 15 
+        
+        # Train model, store training history and test set results
+        history, results = run_training_pipeline(run_name, 
+                                                train_gen, val_gen, test_gen,
+                                                num_epochs, 
+                                                seed,
+                                                0.25,
+                                                rate)
+        # --------------------------
+            
+            
+        
+        # RESULTS SAVING
+        # --------------------------
+        save_results(run_dir, history, results)
+
 
 def main():
     
@@ -138,4 +187,4 @@ def main():
     
         
 if __name__ == '__main__':
-    cosine_LR_decay()
+    label_smooth()
