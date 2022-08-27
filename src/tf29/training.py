@@ -7,13 +7,16 @@ import pandas as pd
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 
-def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, random_seed):
+def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, random_seed, alpha):
     """
     Compiles the desired model, trains it on training and val input data,
     evaluates the trained model and creates a confusion matrix on the test data.
     """
     
     run_dir = f"./Output/{run_name}"
+    
+    steps_per_epoch = train_gen.n//train_gen.batch_size
+    
     
     # make folder to store run info
     os.mkdir(run_dir)
@@ -30,7 +33,14 @@ def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, ra
     
     # Load model
     #model = create_basic_ResNet50()
-    model = create_baseline_ResNet50(random_seed)
+    #model = create_baseline_ResNet50(random_seed)
+    model = compile_improved_ResNet50(random_seed=random_seed, 
+                                      steps_per_epoch=steps_per_epoch,
+                                      enable_dropout=False,
+                                      dropout_rate=0,
+                                      label_smoothing_factor=0,
+                                      enable_cosineLR=True,
+                                      alpha=alpha)
     
     
     logging.info("Training model...")
@@ -47,7 +57,6 @@ def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, ra
     
     # Evaluate 
     results = model.evaluate(x=test_gen)
-                            # steps=8)
     
     logging.info("Testing finished.")
     
@@ -56,8 +65,8 @@ def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, ra
     # ---------------------
     y_true = test_gen.labels
     
-    y_pred = model.predict(test_gen)
-                           #steps=8) # get predicted labels
+    y_pred = model.predict(test_gen) # get predicted labels
+    
     y_pred = y_pred.argmax(axis=1) # convert to ints
     
     plt.figure()

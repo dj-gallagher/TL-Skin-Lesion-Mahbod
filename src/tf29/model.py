@@ -171,11 +171,13 @@ def create_baseline_ResNet50(random_seed):
         
         
 
-def compile_improved_ResNet50(random_seed,
-                              enable_dropout,
-                              dropout_rate,
-                              label_smoothing_factor,
-                              enable_cosineLR):
+def compile_improved_ResNet50(random_seed=6664,
+                              steps_per_epoch=None,
+                              enable_dropout=False,
+                              dropout_rate=0,
+                              label_smoothing_factor=0,
+                              enable_cosineLR=False,
+                              alpha=0.01):
     
     
     """
@@ -247,27 +249,27 @@ def compile_improved_ResNet50(random_seed,
     # COSINE LR DECAY
     # -------------------------------------
     # Different LR for pretrained and FC layers
-    pretrained_lr = 0.0001 
+    pretrained_lr = 0.001 
     FC_lr = 10 * pretrained_lr
     
     # Need two optimizers, one for FC and one for pretrained layers
     if enable_cosineLR:
-        # decay steps = (batches per epoch) * (number of epochs)
-        steps = 66 * (75)
+        # decay steps = (steps per epoch) * (number of epochs)
+        steps = steps_per_epoch * 15 
         
         # Cosine learning rate decay fro pretrained layers
         pretrained_lr_decay_function = keras.experimental.CosineDecay(initial_learning_rate=pretrained_lr,
                                                             decay_steps=steps,
-                                                            alpha=pretrained_lr*0.01) # minimum learning rate
+                                                            alpha=pretrained_lr*alpha) # minimum learning rate
         
-        pretrained_optimizer = keras.optimizers.Adam(learning_rate=pretrained_lr_decay_function)
+        pretrained_optimizer = keras.optimizers.SGD(learning_rate=pretrained_lr_decay_function, momentum=0.9)
         
         # Cosine learning rate decay for FC layers
         FC_lr_decay_function = keras.experimental.CosineDecay(initial_learning_rate=FC_lr,
                                                             decay_steps=steps,
-                                                            alpha=FC_lr*0.01) # minimum learning rate
+                                                            alpha=FC_lr*alpha) # minimum learning rate
         
-        FC_optimizer = keras.optimizers.Adam(learning_rate=FC_lr_decay_function)
+        FC_optimizer = keras.optimizers.SGD(learning_rate=FC_lr_decay_function, momentum=0.9)
 
 
     
