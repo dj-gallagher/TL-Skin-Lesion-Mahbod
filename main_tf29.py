@@ -4,6 +4,7 @@ from src.tf29.training import *
 from src.tf29.dataset_loading import *
 
 import matplotlib
+import tensorflow as tf
 
 matplotlib.use('Agg') # https://stackoverflow.com/questions/2801882/generating-a-png-with-matplotlib-when-display-is-undefined/3054314#3054314
 
@@ -16,6 +17,9 @@ def random_seed_all_test():
     """
     
     for item in [355, 980, 6664, 3175]:
+        
+        # clear session at run start to reset Keras name generation sequence
+        tf.keras.backend.clear_session()
         
         # set random seed
         seed = item
