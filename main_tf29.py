@@ -28,15 +28,16 @@ def random_seed_all_test():
         # TRAINING LOOP
         # --------------------------
         # Name of run
-        run_name = f"random_seed_all_{seed}"
+        run_name = f"random_seed_all_{seed}_2"
         run_dir = f"./Output/{run_name}"
-        run_description = "Baseline with SGDM. Testing effect of random seed."
+        run_description = "Baseline with SGDM. Testing effect of random seed. Fixed Augmentation"
         
         # Load datasets
-        train_gen, val_gen, test_gen = create_dataset_generators(seed)
+        #train_gen, val_gen, test_gen = create_dataset_generators(seed)
+        train_gen, val_gen, test_gen = create_dataset_generators2(seed)
         
         # set number of epochs
-        num_epochs = 50 # 120 epochs for equivalent 8 fold increase in training data
+        num_epochs = 15 # 120 epochs for equivalent 8 fold increase in training data
         
         # Train model, store training history and test set results
         history, results = run_training_pipeline(run_name, 
