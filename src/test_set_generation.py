@@ -49,9 +49,9 @@ def augment_images(image_dir):
 
 def submain():
     
-    train_dir = "./Images/train"
+    train_dir = "./Preprocessed_Images/train"
     
-    test_dir = "./Images/test"
+    test_dir = "./Preprocessed_Images/test"
     
     augment_images(train_dir)
     augment_images(test_dir)
