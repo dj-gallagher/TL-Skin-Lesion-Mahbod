@@ -125,9 +125,9 @@ def label_smooth():
         # TRAINING LOOP
         # --------------------------
         # Name of run
-        run_name = f"labelSmooth_{run_num}"
+        run_name = f"Dropout_{run_num}"
         run_dir = f"./Output/{run_name}"
-        run_description = f"Baseline with SGDM, cosine LR decay and label smoothing. Testing smooth rate. Rate for run = {rate}"
+        run_description = f"Baseline with SGDM, cosine LR decay, label smoothing and dropout. Testing dropout rate. Rate for run = {rate}. Using LR decay to 0.25 times start LR and smoothing of 0.05."
         
         # Load datasets
         #train_gen, val_gen, test_gen = create_dataset_generators(seed)
@@ -142,6 +142,7 @@ def label_smooth():
                                                 num_epochs, 
                                                 seed,
                                                 0.25,
+                                                0.05,
                                                 rate)
         # --------------------------
             

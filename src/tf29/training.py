@@ -7,7 +7,7 @@ import pandas as pd
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 
-def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, random_seed, alpha, smoothFactor):
+def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, random_seed, alpha, smoothFactor, dropRate):
     """
     Compiles the desired model, trains it on training and val input data,
     evaluates the trained model and creates a confusion matrix on the test data.
@@ -36,8 +36,8 @@ def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, ra
     #model = create_baseline_ResNet50(random_seed)
     model = compile_improved_ResNet50(random_seed=random_seed, 
                                       steps_per_epoch=steps_per_epoch,
-                                      enable_dropout=False,
-                                      dropout_rate=0,
+                                      enable_dropout=True,
+                                      dropout_rate=dropRate,
                                       label_smoothing_factor=smoothFactor,
                                       enable_cosineLR=True,
                                       alpha=alpha)
