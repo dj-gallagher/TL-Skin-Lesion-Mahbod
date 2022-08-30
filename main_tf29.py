@@ -21,6 +21,8 @@ def random_seed_all_test():
         # clear session at run start to reset Keras name generation sequence
         tf.keras.backend.clear_session()
         
+        tf.config.run_functions_eagerly(True)
+        
         # set random seed
         seed = item
         
