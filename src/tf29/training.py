@@ -25,7 +25,7 @@ def create_lr_scheduler_cb():
 
 
 
-def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, random_seed, alpha, smoothFactor, dropRate):
+def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, random_seed, alpha=None, smoothFactor=None, dropRate=None):
     """
     Compiles the desired model, trains it on training and val input data,
     evaluates the trained model and creates a confusion matrix on the test data.
