@@ -1,3 +1,4 @@
+from gc import callbacks
 from src.tf29.model import *
 
 import logging
@@ -5,6 +6,23 @@ import os
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+
+
+def create_lr_scheduler_cb():
+    """
+    Callback function to drop LR by factor of 10 at
+    the 5th and 10th epoch
+    """
+    def scheduler(epoch, learning_rate):
+        if epoch == 5 or epoch == 10:
+            return learning_rate * 0.1
+        else:
+            return learning_rate
+        
+    cb = keras.callbacks.LearningRateScheduler(schedule=scheduler, verbose=1)
+    
+    return cb
+
 
 
 def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, random_seed, alpha, smoothFactor, dropRate):
@@ -33,24 +51,28 @@ def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, ra
     
     # Load model
     #model = create_basic_ResNet50()
-    #model = create_baseline_ResNet50(random_seed)
-    model = compile_improved_ResNet50(random_seed=random_seed, 
+    model = create_baseline_ResNet50(random_seed)
+    '''model = compile_improved_ResNet50(random_seed=random_seed, 
                                       steps_per_epoch=steps_per_epoch,
                                       enable_dropout=True,
                                       dropout_rate=dropRate,
                                       label_smoothing_factor=smoothFactor,
                                       enable_cosineLR=True,
-                                      alpha=alpha)
+                                      alpha=alpha)'''
     
     
     logging.info("Training model...")
+    
+    # Create scheduler to reduce lr at 5th and 10th epoch
+    lr_schedule_cb = create_lr_scheduler_cb()
     
     # Fit training data
     history = model.fit(x=train_gen,
                         validation_data=val_gen,
                         steps_per_epoch=train_gen.n//train_gen.batch_size,
                         validation_steps=val_gen.n//val_gen.batch_size,
-                        epochs=num_epochs)
+                        epochs=num_epochs,
+                        callbacks=[lr_schedule_cb])
     
     logging.info("Training finished")
     logging.info("Testing trained model...")
@@ -120,8 +142,8 @@ def save_results(run_dir, history, results):
     
     fig3, ax3 = plt.subplots()
 
-    ax3.plot(epochs, auc, label='Training loss')
-    ax3.plot(epochs, val_auc, label='Validation loss')
+    ax3.plot(epochs, auc, label='Training AUC')
+    ax3.plot(epochs, val_auc, label='Validation AUC')
     ax3.set_title('Training and validation AUC')
     ax3.set_xlabel("Epoch")
     ax3.set_ylabel("AUC")

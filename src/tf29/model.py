@@ -142,13 +142,6 @@ def create_baseline_ResNet50(random_seed):
     optimizer = tfa.optimizers.MultiOptimizer(optimizers_and_layers)
     
     
-    # ----- STANDARD OPTIMIZERS ------
-    #optimizer = keras.optimizers.Adam(learning_rate=lr)
-    #optimizer = keras.optimizers.SGD(learning_rate=0.001, momentum=0.9)
-    #optimizer = keras.optimizers.RMSprop(learning_rate=0.0001)
-    
-    
-    
     # LOSS FUNCTION AND METRICS
     # -------------------------------------
     # Apply label smoothing factor, default is 0 (no smoothing)
@@ -296,12 +289,6 @@ def compile_improved_ResNet50(random_seed=6664,
 
     # Optimizer with different learning rates across layers
     optimizer = tfa.optimizers.MultiOptimizer(optimizers_and_layers)
-    
-    
-    # ----- STANDARD OPTIMIZERS ------
-    #optimizer = keras.optimizers.Adam(learning_rate=pretrained_lr)
-    #optimizer = keras.optimizers.SGD(learning_rate=0.001, momentum=0.9)
-    #optimizer = keras.optimizers.RMSprop(learning_rate=0.0001)
         
         
     

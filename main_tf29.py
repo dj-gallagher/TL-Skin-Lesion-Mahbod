@@ -28,9 +28,9 @@ def random_seed_all_test():
         # TRAINING LOOP
         # --------------------------
         # Name of run
-        run_name = f"random_seed_all_{seed}_2"
+        run_name = f"baseline_seed_{seed}"
         run_dir = f"./Output/{run_name}"
-        run_description = "Baseline with SGDM. Testing effect of random seed. Fixed Augmentation"
+        run_description = "Baseline with SGDM. Testing effect of random seed."
         
         # Load datasets
         #train_gen, val_gen, test_gen = create_dataset_generators(seed)
@@ -188,4 +188,4 @@ def main():
     
         
 if __name__ == '__main__':
-    label_smooth()
+    random_seed_all_test()
