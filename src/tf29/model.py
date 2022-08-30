@@ -14,11 +14,11 @@ class MyLRSchedule(tf.keras.optimizers.schedules.LearningRateSchedule):
     def __call__(self, step):
         
         # 534 steps per epoch. Drop LR at 5th and 10th epocj
-        if tf.equal( step, tf.constant( 534*5 ) ).numpy() == 1: 
+        if tf.equal( step, tf.constant( 534*5, dtype=tf.float32 ) ).numpy() == 1: 
         #if step == (534*5):
             return self.initial_learning_rate * 0.1
         
-        elif tf.equal( step, tf.constant( 534*10 ) ).numpy() == 1: 
+        elif tf.equal( step, tf.constant( 534*10, dtype=tf.float32 ) ).numpy() == 1: 
         #elif step == (534*10):  
             return self.initial_learning_rate * 0.1
         
