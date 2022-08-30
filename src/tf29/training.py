@@ -8,21 +8,6 @@ import pandas as pd
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 
-def create_lr_scheduler_cb():
-    """
-    Callback function to drop LR by factor of 10 at
-    the 5th and 10th epoch
-    """
-    def scheduler(epoch, learning_rate):
-        if epoch == 5 or epoch == 10:
-            return learning_rate * 0.1
-        else:
-            return learning_rate
-        
-    cb = keras.callbacks.LearningRateScheduler(schedule=scheduler, verbose=1)
-    
-    return cb
-
 
 
 def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, random_seed, alpha=None, smoothFactor=None, dropRate=None):
@@ -63,16 +48,12 @@ def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, ra
     
     logging.info("Training model...")
     
-    # Create scheduler to reduce lr at 5th and 10th epoch
-    lr_schedule_cb = create_lr_scheduler_cb()
-    
     # Fit training data
     history = model.fit(x=train_gen,
                         validation_data=val_gen,
                         steps_per_epoch=train_gen.n//train_gen.batch_size,
                         validation_steps=val_gen.n//val_gen.batch_size,
-                        epochs=num_epochs,
-                        callbacks=[lr_schedule_cb])
+                        epochs=num_epochs)
     
     logging.info("Training finished")
     logging.info("Testing trained model...")

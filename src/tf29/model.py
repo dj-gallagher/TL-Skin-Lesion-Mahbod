@@ -2,6 +2,24 @@ from tensorflow import keras
 import tensorflow as tf
 import tensorflow_addons as tfa
 
+
+class MyLRSchedule(tf.keras.optimizers.schedules.LearningRateSchedule):
+    """
+    Mahbod LR Schedule. multiply LR by 0.1 at 5th and 10th epoch
+    """
+
+    def __init__(self, initial_learning_rate):
+        self.initial_learning_rate = initial_learning_rate
+
+    def __call__(self, step):
+        
+        # 534 steps per epoch. Drop LR at 5th and 10th epocj
+        if step == (534*5):
+            return self.initial_learning_rate * 0.1
+        elif step == (534*10):  
+            return self.initial_learning_rate * 0.1
+        else:
+            return self.initial_learning_rate 
     
 
 def create_basic_ResNet50():
@@ -121,13 +139,14 @@ def create_baseline_ResNet50(random_seed):
     pretrained_lr = 0.001 # ADAM - 0.0001 
     new_lr = 10 * pretrained_lr 
 
+    
 
     # ----- MULTIOPTIMIZER ------
     #optimizers = [keras.optimizers.Adam(learning_rate=pretrained_lr),
     #              keras.optimizers.Adam(learning_rate=new_lr)]
     
-    optimizers = [keras.optimizers.SGD(learning_rate=pretrained_lr, momentum=0.9),
-                  keras.optimizers.SGD(learning_rate=new_lr, momentum=0.9)]
+    optimizers = [keras.optimizers.SGD(learning_rate=MyLRSchedule(pretrained_lr), momentum=0.9),
+                  keras.optimizers.SGD(learning_rate=MyLRSchedule(new_lr), momentum=0.9)]
 
     # Layer objects for pre-trained and FC layers
     block_17_layers = [ model.get_layer(name=name) for name in block_17_names ]
