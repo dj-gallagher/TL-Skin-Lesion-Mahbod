@@ -63,7 +63,7 @@ def cosine_LR_decay():
     
     run_num = 0
     
-    for min in [0.5, 0.25, 0.1, 0.05]:
+    for mult in [1, 0.5]: # 0.1, 0.05]:
         
         # to name output files as fullstop in min value will cause error
         run_num += 1
@@ -72,15 +72,15 @@ def cosine_LR_decay():
         tf.keras.backend.clear_session()
         
         # set random seed
-        seed = 6664
+        seed = 355
         
         
         # TRAINING LOOP
         # --------------------------
         # Name of run
-        run_name = f"LR_decay_min_{run_num}"
+        run_name = f"LR_decay_mult_{run_num}"
         run_dir = f"./Output/{run_name}"
-        run_description = f"Baseline with SGDM and cosine LR decat. Testing min LR to decay to. Fraction of initial LR deacying to = {min}"
+        run_description = f"Baseline with SGDM and cosine LR decay. Testing rate of LR decay. Fraction of full epochs to decay to 1/10th initial LR = {mult}"
         
         # Load datasets
         #train_gen, val_gen, test_gen = create_dataset_generators(seed)
@@ -94,7 +94,10 @@ def cosine_LR_decay():
                                                 train_gen, val_gen, test_gen,
                                                 num_epochs, 
                                                 seed,
-                                                min)
+                                                0.1,
+                                                0,
+                                                0,
+                                                mult)
         # --------------------------
             
             
@@ -190,4 +193,4 @@ def main():
     
         
 if __name__ == '__main__':
-    random_seed_all_test()
+    cosine_LR_decay()

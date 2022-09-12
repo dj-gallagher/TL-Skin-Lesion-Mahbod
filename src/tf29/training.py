@@ -10,7 +10,7 @@ from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 
 
-def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, random_seed, alpha=None, smoothFactor=None, dropRate=None):
+def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, random_seed, alpha=None, smoothFactor=None, dropRate=None, steps_multiplier=1):
     """
     Compiles the desired model, trains it on training and val input data,
     evaluates the trained model and creates a confusion matrix on the test data.
@@ -36,14 +36,15 @@ def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, ra
     
     # Load model
     #model = create_basic_ResNet50()
-    model = create_baseline_ResNet50(random_seed)
-    '''model = compile_improved_ResNet50(random_seed=random_seed, 
+    #model = create_baseline_ResNet50(random_seed)
+    model = compile_improved_ResNet50(random_seed=random_seed, 
                                       steps_per_epoch=steps_per_epoch,
-                                      enable_dropout=True,
+                                      enable_dropout=False,
                                       dropout_rate=dropRate,
                                       label_smoothing_factor=smoothFactor,
                                       enable_cosineLR=True,
-                                      alpha=alpha)'''
+                                      alpha=alpha,
+                                      steps_multiplier=steps_multiplier)
     
     
     logging.info("Training model...")

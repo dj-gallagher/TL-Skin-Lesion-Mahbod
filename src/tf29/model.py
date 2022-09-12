@@ -202,7 +202,8 @@ def compile_improved_ResNet50(random_seed=6664,
                               dropout_rate=0,
                               label_smoothing_factor=0,
                               enable_cosineLR=False,
-                              alpha=0.01):
+                              alpha=0.1,
+                              steps_multiplier=1):
     
     
     """
@@ -281,6 +282,8 @@ def compile_improved_ResNet50(random_seed=6664,
     if enable_cosineLR:
         # decay steps = (steps per epoch) * (number of epochs)
         steps = steps_per_epoch * 15 
+        
+        steps = steps * steps_multiplier
         
         # Cosine learning rate decay fro pretrained layers
         pretrained_lr_decay_function = keras.experimental.CosineDecay(initial_learning_rate=pretrained_lr,
