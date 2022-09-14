@@ -61,9 +61,9 @@ def cosine_LR_decay():
     15 training epochs.  
     """
     
-    run_num = 0
+    run_num = 2
     
-    for mult in [1, 0.5]: # 0.1, 0.05]:
+    for mult in [0.25, 0.1]: # 0.1, 0.05]:
         
         # to name output files as fullstop in min value will cause error
         run_num += 1
