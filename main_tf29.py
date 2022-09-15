@@ -109,13 +109,16 @@ def cosine_LR_decay():
     
 def label_smooth():
     """
-    Multiple runs where label smoothing rate is varied. Random seed of 6664 is used.
-    15 training epochs. LR min factor of alpha = 0.25
+    Multiple runs where label smoothing rate is varied.
+    Random seed of 355 is used.
+    15 training epochs.
+    LR is decayed to 1/10th its original value in {insert fraction} the full number of epochs.
+    Label smoothing factor is varied.
     """
     
     run_num = 0
     
-    for rate in [0.5, 0.3, 0.1, 0.05]:
+    for rate in [0.5, 0.1, 0.05, 0.01]:
         
         # to name output files as fullstop in min value will cause error
         run_num += 1
@@ -124,7 +127,7 @@ def label_smooth():
         tf.keras.backend.clear_session()
         
         # set random seed
-        seed = 6664
+        seed = 355
         
         
         # TRAINING LOOP
@@ -132,7 +135,7 @@ def label_smooth():
         # Name of run
         run_name = f"Dropout_{run_num}"
         run_dir = f"./Output/{run_name}"
-        run_description = f"Baseline with SGDM, cosine LR decay, label smoothing and dropout. Testing dropout rate. Rate for run = {rate}. Using LR decay to 0.25 times start LR and smoothing of 0.05."
+        run_description = f"Baseline with SGDM, cosine LR decay, label smoothing. Testing dropout rate. Rate for run = {rate}. Using LR decay to 0.25 times start LR and smoothing of 0.05."
         
         # Load datasets
         #train_gen, val_gen, test_gen = create_dataset_generators(seed)
@@ -142,13 +145,16 @@ def label_smooth():
         num_epochs = 15 
         
         # Train model, store training history and test set results
-        history, results = run_training_pipeline(run_name, 
-                                                train_gen, val_gen, test_gen,
-                                                num_epochs, 
-                                                seed,
-                                                0.25,
-                                                0.05,
-                                                rate)
+        history, results = run_training_pipeline(run_name=run_name,
+                                                 train_gen=train_gen,
+                                                 val_gen=val_gen,
+                                                 test_gen=test_gen,
+                                                 num_epochs=num_epochs, 
+                                                 random_seed=seed,
+                                                 alpha=0.1, 
+                                                 smoothFactor=rate,
+                                                 dropRate=0,
+                                                 steps_multiplier=0.5)
         # --------------------------
             
             
@@ -193,4 +199,4 @@ def main():
     
         
 if __name__ == '__main__':
-    cosine_LR_decay()
+    label_smooth()
