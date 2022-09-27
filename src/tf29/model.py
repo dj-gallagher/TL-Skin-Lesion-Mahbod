@@ -139,6 +139,20 @@ def create_baseline_ResNet50(random_seed):
     # Set these layers to be trainable
     for name in block_17_names:
         trainable_dict[name] = True  # change dict values to true     
+        
+    
+    
+    # Identify names of layers in 16th block
+    block_16_names = []
+    for name in [ layer.name for layer in model.layers ]: # iterate through model layer names
+        if "conv5_block2" in name: # conv5_block3 is naming schemee for 17th block
+            block_16_names.append(name)
+            
+    # Set these layers to be trainable
+    for name in block_16_names:
+        trainable_dict[name] = True  # change dict values to true     
+        
+        
     
     for layer_name, trainable_bool in trainable_dict.items():
         layer = model.get_layer(name=layer_name)
@@ -346,3 +360,4 @@ def compile_improved_ResNet50(random_seed=6664,
     
     
     return model
+

@@ -223,28 +223,34 @@ def dropout():
 
 def main():
     
+    # clear session at run start to reset Keras name generation sequence
+    tf.keras.backend.clear_session()
+    
+    tf.config.run_functions_eagerly(True)
+    
     # set random seed
-    seed = 4409
+    seed = 355
     
     
     # TRAINING LOOP
     # --------------------------
     # Name of run
-    run_name = "tf_29_SGDM_AugTestData1"
+    run_name = f"baseline_block16_unfrozen"
     run_dir = f"./Output/{run_name}"
-    run_description = "Baseline with SGDM and augmented test data (8 fold increase)"
+    run_description = "Baseline with block 16 unfrozen."
     
     # Load datasets
-    train_gen, val_gen, test_gen = create_dataset_generators(seed)
+    #train_gen, val_gen, test_gen = create_dataset_generators(seed)
+    train_gen, val_gen, test_gen = create_dataset_generators2(seed)
     
     # set number of epochs
-    num_epochs = 120 # 120 epochs for equivalent 8 fold increase in training data
+    num_epochs = 15 # 120 epochs for equivalent 8 fold increase in training data
     
     # Train model, store training history and test set results
     history, results = run_training_pipeline(run_name, 
-                                             train_gen, val_gen, test_gen,
-                                             num_epochs, 
-                                             seed)
+                                            train_gen, val_gen, test_gen,
+                                            num_epochs, 
+                                            seed)
     # --------------------------
         
         
@@ -256,4 +262,4 @@ def main():
     
         
 if __name__ == '__main__':
-    dropout()
+    main()
