@@ -83,7 +83,7 @@ def create_dataset_generators(random_seed=123):
     return train_gen, val_gen, test_gen
 
 
-def create_dataset_generators2(random_seed):
+def create_dataset_generators2(random_seed=123):
     """
     Create image data generator objects for training, validation and test sets. 
     Augmentation included on training and validation but not test sets.
@@ -106,7 +106,7 @@ def create_dataset_generators2(random_seed):
                                       class_mode="categorical",
                                       batch_size=32,
                                       shuffle=True,
-                                      seed=random_seed,
+                                      seed=123,
                                       subset="training")
     
     val_gen = train_datagen.flow_from_directory(directory=train_data_dir, 
@@ -114,7 +114,7 @@ def create_dataset_generators2(random_seed):
                                       class_mode="categorical",
                                       batch_size=32,
                                       shuffle=True,
-                                      seed=random_seed,
+                                      seed=123,
                                       subset="validation")
     
     test_gen = test_datagen.flow_from_directory(directory=test_data_dir,
@@ -122,6 +122,6 @@ def create_dataset_generators2(random_seed):
                                                 class_mode="categorical",
                                                 batch_size=1,
                                                 shuffle=False,
-                                                seed=random_seed)
+                                                seed=123)
     
     return train_gen, val_gen, test_gen
