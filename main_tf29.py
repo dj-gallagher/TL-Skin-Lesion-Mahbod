@@ -223,41 +223,45 @@ def dropout():
 
 def main():
     
-    # clear session at run start to reset Keras name generation sequence
-    tf.keras.backend.clear_session()
+    seed_list = [1, 100, 250, 365, 498, 579, 623, 724, 811, 1000]
     
-    tf.config.run_functions_eagerly(True)
+    for seed in seed_list:
     
-    # set random seed
-    seed = 355
-    
-    
-    # TRAINING LOOP
-    # --------------------------
-    # Name of run
-    run_name = f"baseline_block16_unfrozen"
-    run_dir = f"./Output/{run_name}"
-    run_description = "Baseline with block 16 unfrozen."
-    
-    # Load datasets
-    #train_gen, val_gen, test_gen = create_dataset_generators(seed)
-    train_gen, val_gen, test_gen = create_dataset_generators2(seed)
-    
-    # set number of epochs
-    num_epochs = 15 # 120 epochs for equivalent 8 fold increase in training data
-    
-    # Train model, store training history and test set results
-    history, results = run_training_pipeline(run_name, 
-                                            train_gen, val_gen, test_gen,
-                                            num_epochs, 
-                                            seed)
-    # --------------------------
+        # clear session at run start to reset Keras name generation sequence
+        tf.keras.backend.clear_session()
+        
+        tf.config.run_functions_eagerly(True)
+        
+        # set random seed
+        #seed = 355
         
         
-    
-    # RESULTS SAVING
-    # --------------------------
-    save_results(run_dir, history, results)
+        # TRAINING LOOP
+        # --------------------------
+        # Name of run
+        run_name = f"Test_1_Seed_{seed}"
+        run_dir = f"./Output/{run_name}"
+        run_description = "Baseline with different weight inits."
+        
+        # Load datasets
+        #train_gen, val_gen, test_gen = create_dataset_generators(seed)
+        train_gen, val_gen, test_gen = create_dataset_generators2()
+        
+        # set number of epochs
+        num_epochs = 4 # 15 standard
+        
+        # Train model, store training history and test set results
+        history, results = run_training_pipeline(run_name, 
+                                                train_gen, val_gen, test_gen,
+                                                num_epochs, 
+                                                seed)
+        # --------------------------
+            
+            
+        
+        # RESULTS SAVING
+        # --------------------------
+        save_results(run_dir, history, results)
     
     
         

@@ -100,6 +100,21 @@ def save_results(run_dir, history, results):
     
     epochs = range(1, len(acc) + 1)
 
+    # save raw data to a CSV file in case its needed later
+    raw_data_dict = {'epochs':epochs,
+                     'acc':acc,
+                     'val_acc':val_acc,
+                     'loss':loss,
+                     'val_loss':val_loss,
+                     'auc':auc,
+                     'val_auc':val_auc}
+    
+    raw_data_DF = pd.DataFrame.from_dict(raw_data_dict)
+    
+    raw_data_DF.to_csv(run_dir + "/raw_data.csv")
+    
+    
+
     fig1, ax1 = plt.subplots()
     
     ax1.plot(epochs, acc, label='Training acc')

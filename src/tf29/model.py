@@ -142,7 +142,7 @@ def create_baseline_ResNet50(random_seed):
         
     
     
-    # Identify names of layers in 16th block
+    '''# Identify names of layers in 16th block
     block_16_names = []
     for name in [ layer.name for layer in model.layers ]: # iterate through model layer names
         if "conv5_block2" in name: # conv5_block3 is naming schemee for 17th block
@@ -150,13 +150,13 @@ def create_baseline_ResNet50(random_seed):
             
     # Set these layers to be trainable
     for name in block_16_names:
-        trainable_dict[name] = True  # change dict values to true     
+        trainable_dict[name] = True  # change dict values to true'''  
         
         
     
     for layer_name, trainable_bool in trainable_dict.items():
         layer = model.get_layer(name=layer_name)
-        layer.trainable = trainable_bool    
+        layer.trainable = trainable_bool   
 
 
         
@@ -245,14 +245,14 @@ def compile_improved_ResNet50(random_seed=6664,
     x = keras.layers.GlobalAveragePooling2D()(x)
 
     if enable_dropout:
-        x = keras.layers.Dropout(rate=dropout_rate, seed=random_seed)(x)
+        x = keras.layers.Dropout(rate=dropout_rate, seed=123)(x)
 
     x = keras.layers.Dense(units=64, 
                            activation="relu", 
                            kernel_initializer=keras.initializers.RandomNormal(mean=0, stddev=1, seed=random_seed))(x)
     
     if enable_dropout:
-        x = keras.layers.Dropout(rate=dropout_rate, seed=random_seed)(x)
+        x = keras.layers.Dropout(rate=dropout_rate, seed=123)(x)
 
     
     predictions = keras.layers.Dense(units=3, activation="softmax",
