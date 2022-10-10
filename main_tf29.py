@@ -223,7 +223,7 @@ def dropout():
 
 def main():
     
-    seed_list = [1, 100, 250, 365, 498, 579, 623, 724, 811, 1000]
+    seed_list = [1, 100, 250, 365, 498, 579, 623]
     
     for seed in seed_list:
     

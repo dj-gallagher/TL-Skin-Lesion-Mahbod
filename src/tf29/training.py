@@ -109,7 +109,8 @@ def save_results(run_dir, history, results):
                      'auc':auc,
                      'val_auc':val_auc}
     
-    raw_data_DF = pd.DataFrame.from_dict(raw_data_dict)
+    raw_data_DF = pd.DataFrame(dict([ (k,pd.Series(v)) for k,v in raw_data_dict.items() ]))
+
     
     raw_data_DF.to_csv(run_dir + "/raw_data.csv")
     
