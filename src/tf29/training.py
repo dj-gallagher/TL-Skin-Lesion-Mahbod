@@ -36,15 +36,15 @@ def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, ra
     
     # Load model
     #model = create_basic_ResNet50()
-    model = create_baseline_ResNet50(random_seed)
-    '''model = compile_improved_ResNet50(random_seed=random_seed, 
+    #model = create_baseline_ResNet50(random_seed)
+    model = compile_improved_ResNet50(random_seed=random_seed, 
                                       steps_per_epoch=steps_per_epoch,
-                                      enable_dropout=True,
+                                      enable_dropout=False,
                                       dropout_rate=dropRate,
                                       label_smoothing_factor=smoothFactor,
                                       enable_cosineLR=True,
                                       alpha=alpha,
-                                      steps_multiplier=steps_multiplier)'''
+                                      steps_multiplier=steps_multiplier)
     
     
     logging.info("Training model...")
