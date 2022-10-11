@@ -307,7 +307,7 @@ def cosine_LR_decay_tests():
                                                 alpha=0.1,
                                                 smoothFactor=0,
                                                 dropRate=0,
-                                                step_multiplier=1)
+                                                steps_multiplier=1)
         # --------------------------
             
             
