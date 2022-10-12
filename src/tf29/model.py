@@ -302,14 +302,14 @@ def compile_improved_ResNet50(random_seed=6664,
         # Cosine learning rate decay fro pretrained layers
         pretrained_lr_decay_function = keras.experimental.CosineDecay(initial_learning_rate=pretrained_lr,
                                                             decay_steps=steps,
-                                                            alpha=pretrained_lr*alpha) # minimum learning rate
+                                                            alpha=pretrained_lr*0.01) # minimum learning rate
         
         pretrained_optimizer = keras.optimizers.SGD(learning_rate=pretrained_lr_decay_function, momentum=0.9)
         
         # Cosine learning rate decay for FC layers
         FC_lr_decay_function = keras.experimental.CosineDecay(initial_learning_rate=FC_lr,
                                                             decay_steps=steps,
-                                                            alpha=FC_lr*alpha) # minimum learning rate
+                                                            alpha=FC_lr*0.01) # minimum learning rate
         
         FC_optimizer = keras.optimizers.SGD(learning_rate=FC_lr_decay_function, momentum=0.9)
 

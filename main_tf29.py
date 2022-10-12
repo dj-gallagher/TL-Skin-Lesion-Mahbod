@@ -304,7 +304,7 @@ def cosine_LR_decay_tests():
                                                 train_gen, val_gen, test_gen,
                                                 num_epochs, 
                                                 seed,
-                                                alpha=0.1,
+                                                alpha=0.01,
                                                 smoothFactor=0,
                                                 dropRate=0,
                                                 steps_multiplier=1)
