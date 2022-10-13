@@ -39,7 +39,7 @@ def run_training_pipeline(run_name, train_gen, val_gen, test_gen, num_epochs, ra
     #model = create_baseline_ResNet50(random_seed)
     model = compile_improved_ResNet50(random_seed=random_seed, 
                                       steps_per_epoch=steps_per_epoch,
-                                      enable_dropout=False,
+                                      enable_dropout=True,
                                       dropout_rate=dropRate,
                                       label_smoothing_factor=smoothFactor,
                                       enable_cosineLR=True,
