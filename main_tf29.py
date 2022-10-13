@@ -367,8 +367,63 @@ def label_smoothing_tests():
         # RESULTS SAVING
         # --------------------------
         save_results(run_dir, history, results)
+
+
+def cosine_LR_extra_epochs_tests():
+    pass
+    
+def label_smmothing_extra_epochs_tests():
+    """
+    Multiple runs where LR decay minimum is varied. Random seed of 6664 is used.
+    15 training epochs.  
+    """
+    
+    run_num = 0
+    
+    for factor in [0.01, 0.1, 0.2]: # other factors tested 0.3, 0.4, 0.5]: 
+        
+        # to name output files as fullstop in min value will cause error
+        run_num += 1
+                
+        # clear session at run start to reset Keras name generation sequence
+        tf.keras.backend.clear_session()
+        
+        # set random seed
+        seed = 365 # EDIT in based on Test 1 results
+        
+        
+        # TRAINING LOOP
+        # --------------------------
+        # Name of run
+        run_name = f"Test_3_Run_{run_num}_extraEpochs"
+        run_dir = f"./Output/{run_name}"
+        run_description = f"Baseline with SGDM, cosine LR decay, increased epochs and label smoothing. Smooth factor = {factor}"
+        
+        # Load datasets
+        #train_gen, val_gen, test_gen = create_dataset_generators(seed)
+        train_gen, val_gen, test_gen = create_dataset_generators2(seed)
+        
+        # set number of epochs
+        num_epochs = 12
+        
+        # Train model, store training history and test set results
+        history, results = run_training_pipeline(run_name, 
+                                                train_gen, val_gen, test_gen,
+                                                num_epochs, 
+                                                seed,
+                                                alpha=0.01,
+                                                smoothFactor=factor,
+                                                dropRate=0,
+                                                steps_multiplier=1)
+        # --------------------------
+            
+            
+        
+        # RESULTS SAVING
+        # --------------------------
+        save_results(run_dir, history, results)
     
     
         
 if __name__ == '__main__':
-    label_smoothing_tests()
+    label_smmothing_extra_epochs_tests()
