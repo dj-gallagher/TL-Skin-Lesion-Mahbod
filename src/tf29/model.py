@@ -163,17 +163,18 @@ def create_baseline_ResNet50(random_seed):
     # OPTIMIZERS
     # -------------------------------------
     # Different LR for pretrained and FC layers
-    pretrained_lr = 0.001 # ADAM - 0.0001 
+    pretrained_lr = 0.0001 # ADAM - 0.0001 
     new_lr = 10 * pretrained_lr 
 
     
 
     # ----- MULTIOPTIMIZER ------
-    #optimizers = [keras.optimizers.Adam(learning_rate=pretrained_lr),
-    #              keras.optimizers.Adam(learning_rate=new_lr)]
+
+    #optimizers = [keras.optimizers.SGD(learning_rate=MyLRSchedule(pretrained_lr), momentum=0.9),
+    #              keras.optimizers.SGD(learning_rate=MyLRSchedule(new_lr), momentum=0.9)]
     
-    optimizers = [keras.optimizers.SGD(learning_rate=MyLRSchedule(pretrained_lr), momentum=0.9),
-                  keras.optimizers.SGD(learning_rate=MyLRSchedule(new_lr), momentum=0.9)]
+    optimizers = [keras.optimizers.Adam(learning_rate=MyLRSchedule(pretrained_lr)),
+                  keras.optimizers.Adam(learning_rate=MyLRSchedule(new_lr))]
 
     # Layer objects for pre-trained and FC layers
     block_17_layers = [ model.get_layer(name=name) for name in block_17_names ]
@@ -210,7 +211,7 @@ def create_baseline_ResNet50(random_seed):
         
         
 
-def compile_improved_ResNet50(random_seed=6664,
+def compile_improved_ResNet50(random_seed=365,
                               steps_per_epoch=None,
                               enable_dropout=False,
                               dropout_rate=0,

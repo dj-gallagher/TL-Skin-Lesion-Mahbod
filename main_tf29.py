@@ -472,6 +472,46 @@ def dropout_extra_epochs_tests():
         # --------------------------
         save_results(run_dir, history, results)
 
+
+def baseline():
+    
+    # clear session at run start to reset Keras name generation sequence
+    tf.keras.backend.clear_session()
+    
+    tf.config.run_functions_eagerly(True)
+    
+    # set random seed
+    seed = 365
+    
+    
+    # TRAINING LOOP
+    # --------------------------
+    # Name of run
+    run_name = f"Final_1"
+    run_dir = f"./Output/{run_name}"
+    run_description = "Baseline with different weight inits."
+    
+    # Load datasets
+    #train_gen, val_gen, test_gen = create_dataset_generators(seed)
+    train_gen, val_gen, test_gen = create_dataset_generators2()
+    
+    # set number of epochs
+    num_epochs = 15 # 4 speed run
+    
+    # Train model, store training history and test set results
+    history, results = run_training_pipeline(run_name, 
+                                            train_gen, val_gen, test_gen,
+                                            num_epochs, 
+                                            seed)
+    # --------------------------
+        
+        
+    
+    # RESULTS SAVING
+    # --------------------------
+    save_results(run_dir, history, results)
+    
+
         
 if __name__ == '__main__':
     label_smmothing_extra_epochs_tests()
