@@ -514,4 +514,4 @@ def baseline():
 
         
 if __name__ == '__main__':
-    label_smmothing_extra_epochs_tests()
+    baseline()
