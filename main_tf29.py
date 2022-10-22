@@ -288,7 +288,7 @@ def cosine_LR_decay_tests():
         # TRAINING LOOP
         # --------------------------
         # Name of run
-        run_name = f"Test_2_Run_{run_num}"
+        run_name = f"Final_2"
         run_dir = f"./Output/{run_name}"
         run_description = f"Baseline with SGDM and cosine LR decay. Fraction of full epochs to decay to 1/10th initial LR = {mult}"
         
@@ -297,7 +297,7 @@ def cosine_LR_decay_tests():
         train_gen, val_gen, test_gen = create_dataset_generators2(seed)
         
         # set number of epochs
-        num_epochs = 4
+        num_epochs = 15
         
         # Train model, store training history and test set results
         history, results = run_training_pipeline(run_name, 
@@ -314,7 +314,7 @@ def cosine_LR_decay_tests():
         
         # RESULTS SAVING
         # --------------------------
-        save_results(run_dir, history, results)
+        save_results(run_dir, history, results) 
 
     
 def label_smoothing_tests():
@@ -514,4 +514,5 @@ def baseline():
 
         
 if __name__ == '__main__':
-    baseline()
+    
+    cosine_LR_decay_tests
