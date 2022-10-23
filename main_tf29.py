@@ -323,9 +323,9 @@ def label_smoothing_tests():
     15 training epochs.  
     """
     
-    run_num = 0
+    run_num = 3
     
-    for factor in [0.01, 0.1, 0.2, 0.3, 0.4, 0.5]: # 0.1, 0.05]:
+    for factor in [0.01, 0.05, 0.1, 0.2]: # 0.1, 0.05]:
         
         # to name output files as fullstop in min value will cause error
         run_num += 1
@@ -340,7 +340,7 @@ def label_smoothing_tests():
         # TRAINING LOOP
         # --------------------------
         # Name of run
-        run_name = f"Test_3_Run_{run_num}"
+        run_name = f"Final_{run_num}"
         run_dir = f"./Output/{run_name}"
         run_description = f"Baseline with SGDM, cosine LR decay and label smoothing. Smooth factor = {factor}"
         
@@ -515,4 +515,4 @@ def baseline():
         
 if __name__ == '__main__':
     
-    cosine_LR_decay_tests()
+    label_smoothing_tests()
