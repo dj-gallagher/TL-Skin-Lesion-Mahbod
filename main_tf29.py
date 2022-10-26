@@ -427,9 +427,9 @@ def dropout_extra_epochs_tests():
     15 training epochs.  
     """
     
-    run_num = 0
+    run_num = 7
     
-    for probability in [0.01, 0.05, 0.1]: # other factors tested 0.3, 0.4, 0.5]: 
+    for probability in [0.01, 0.05, 0.08, 0.1]: # other factors tested 
         
         # to name output files as fullstop in min value will cause error
         run_num += 1
@@ -444,7 +444,7 @@ def dropout_extra_epochs_tests():
         # TRAINING LOOP
         # --------------------------
         # Name of run
-        run_name = f"Test_4_Run_{run_num}_extraEpochs"
+        run_name = f"Final_{run_num}"
         run_dir = f"./Output/{run_name}"
         run_description = f"Baseline with SGDM, cosine LR decay, increased epochs, label smoothing and dropout. Dropout rate = {probability}"
         
@@ -453,7 +453,7 @@ def dropout_extra_epochs_tests():
         train_gen, val_gen, test_gen = create_dataset_generators2(seed)
         
         # set number of epochs
-        num_epochs = 12
+        num_epochs = 45
         
         # Train model, store training history and test set results
         history, results = run_training_pipeline(run_name, 
@@ -461,7 +461,7 @@ def dropout_extra_epochs_tests():
                                                 num_epochs, 
                                                 seed,
                                                 alpha=0.01,
-                                                smoothFactor=0.1,
+                                                smoothFactor=0.01,
                                                 dropRate=probability,
                                                 steps_multiplier=1)
         # --------------------------
@@ -515,4 +515,4 @@ def baseline():
         
 if __name__ == '__main__':
     
-    label_smoothing_tests()
+    dropout_extra_epochs_tests()
